@@ -1,1 +1,1 @@
-export const TOKEN = "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";
+export const TOKEN = "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";

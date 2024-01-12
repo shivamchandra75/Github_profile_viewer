@@ -15,11 +15,11 @@ function App() {
   const [searchResults, setSearchResults] = useState([]);
   const [searchMode, setSearchMode] = useState("User");
 
+  //we can say if enter is pressed then immedieately setDelayedSearchQuery(serachQuery)
   useEffect(() => {
     const timeout = setTimeout(() => {
       setDelayedSearchQuery(searchQuery);
-      console.log("ran");
-    }, 300);
+    }, 500);
 
     //cleanup fn
     return function () {
@@ -89,5 +89,3 @@ function App() {
 }
 
 export default App;
-
-// sidha panday kothi siwas public school right tinu public school road ss public school matke wali gali kaam chal rha hoga 4-5

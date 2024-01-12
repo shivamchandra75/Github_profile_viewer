@@ -31,8 +31,6 @@ export default function ProfileCard() {
       </div>
       <p>{profileData.name}</p>
 
-      <button className="profile-btn">Visit Profile</button>
-
       <span>
         {profileData.followers} followers • {profileData.following} following
       </span>

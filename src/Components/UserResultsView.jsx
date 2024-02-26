@@ -14,11 +14,12 @@ export default function UserResultsView() {
         dispatch({ type: "isLoading" });
         //When you use map with async functions, it returns an array of promises, and the state is being set to an array of promises rather than the resolved data.
         const promises = searchResults.map(async (user) => {
-          const res = await fetch(user.url, {
-            headers: {
-              Authorization: `Bearer ${TOKEN}`,
-            },
-          });
+          const res = await fetch(user.url);
+          // , {
+          //   headers: {
+          //     Authorization: `Bearer ${TOKEN}`,
+          //   },
+          // });
           // catch errors
           if (!res.ok) throw new Error("some problem fetching bro 󰱶 ");
 

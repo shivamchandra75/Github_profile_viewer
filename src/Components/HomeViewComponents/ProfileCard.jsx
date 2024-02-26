@@ -3,18 +3,19 @@ import { TOKEN } from "../../config";
 
 export default function ProfileCard() {
   const [profileData, setProfileData] = useState({});
+
   useEffect(() => {
     async function fetchProfile() {
       try {
         const res = await fetch(
-          "https://api.github.com/users/shivamchandra75",
-          {
-            headers: {
-              Authorization: `Bearer ${TOKEN}`,
-            },
-          },
+          "https://api.github.com/users/shivamchandra75"
+          // {
+          //   headers: {
+          //     Authorization: `Bearer ${TOKEN}`,
+          //   },
+          // }
         );
-        if (!res.ok) throw new Error("some problem fetching bro 󰱶 ");
+        if (!res.ok) throw new Error("some problem fetching bro ☹️");
         const data = await res.json();
 
         setProfileData(data);

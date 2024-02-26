@@ -80,14 +80,14 @@ function StateProvider({ children }) {
         dispatch({ type: "isLoading" });
         const mode = searchMode === "User" ? "users" : "repositories";
         const res = await fetch(
-          `https://api.github.com/search/${mode}?q=${delayedSearchQuery}`
-          // {
-          //   headers: {
-          //     Authorization: `Bearer ${TOKEN}`,
-          //   },
+          `https://api.github.com/search/${mode}?q=${delayedSearchQuery}`,
+          {
+            headers: {
+              Authorization: `Bearer ${TOKEN}`,
+            },
 
-          //   signal: controller.signal,
-          // }
+            signal: controller.signal,
+          }
         );
         const data = await res.json();
         dispatch({ type: "searchResultsFetched", payload: data.items });

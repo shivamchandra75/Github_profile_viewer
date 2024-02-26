@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { formatCompactNumber } from "./StateProvider";
 import Spinner from "./Spinner";
+import { TOKEN } from "../config";
 
 export default function UserProfileView() {
   const [searchParams] = useSearchParams();
@@ -18,7 +19,12 @@ export default function UserProfileView() {
     async function getUserRepos() {
       try {
         const res = await fetch(
-          `https://api.github.com/users/${userName}/repos`
+          `https://api.github.com/users/${userName}/repos`,
+          {
+            headers: {
+              Authorization: `Bearer ${TOKEN}`,
+            },
+          }
         );
         const data = await res.json();
         setRepos(data);

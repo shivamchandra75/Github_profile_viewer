@@ -11,12 +11,12 @@ export default function PopularRepos() {
     async function fetchPopularRepos() {
       try {
         const res = await fetch(
-          "https://api.github.com/search/repositories?q=stars:>210000"
-          // {
-          //   headers: {
-          //     Authorization: `Bearer ${TOKEN}`,
-          //   },
-          // }
+          "https://api.github.com/search/repositories?q=stars:>210000",
+          {
+            headers: {
+              Authorization: `Bearer ${TOKEN}`,
+            },
+          }
         );
         const data = await res.json();
 

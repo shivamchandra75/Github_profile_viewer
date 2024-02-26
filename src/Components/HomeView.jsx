@@ -1,4 +1,3 @@
-import React from "react";
 import PopularRepos from "./HomeViewComponents/PopularRepos";
 import ProfileCard from "./HomeViewComponents/ProfileCard";
 
@@ -24,9 +23,26 @@ function MainCard() {
         </p>
         <button>Type `/`</button>
       </div>
+      <div className="img">
+        <img src="./assets/homeView.png" alt="" />
+      </div>
+      <div className="glow"></div>
     </div>
   );
 }
 function FeatureCard() {
-  return <div className="home__featured-card"></div>;
+  return (
+    <div className="home__featured-card">
+      <div className="faded-border">
+        <div className="border">
+          <div className="copy-div">Copy Profile Link</div>
+        </div>
+      </div>
+      <h3>Seamless Sharing</h3>
+      <p>
+        Copy Your GitHub Profile Link with a Single Click for Effortless Profile
+        Sharing and Visibility
+      </p>
+    </div>
+  );
 }

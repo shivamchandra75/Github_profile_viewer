@@ -2,13 +2,15 @@ import { useNavigate, useLocation } from "react-router-dom";
 import Logo from "../icons/Logo";
 import SearchIcon from "../icons/SearchIcon";
 import TerminalIcon from "../icons/TerminalIcon";
+import { useMyData } from "./StateProvider";
 
 const activeBtnStyle = {
   backgroundColor: "#131D2E",
   color: "#3081F7",
   borderColor: "#3081f7",
 };
-export default function Navbar({ setSearchQuery, searchMode, setSearchMode }) {
+export default function Navbar() {
+  const { dispatch, searchMode } = useMyData();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -33,7 +35,9 @@ export default function Navbar({ setSearchQuery, searchMode, setSearchMode }) {
           className="search-bar__input"
           type="text"
           placeholder={`Search Github ${searchMode}`}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          onChange={(e) =>
+            dispatch({ type: "searchQueryChanged", payload: e.target.value })
+          }
         />
         <TerminalIcon />
       </form>
@@ -41,7 +45,8 @@ export default function Navbar({ setSearchQuery, searchMode, setSearchMode }) {
         style={searchMode === "Repo" ? activeBtnStyle : {}}
         className="navbar__btn"
         onClick={() => {
-          if (location.pathname === "/") setSearchMode("Repo");
+          if (location.pathname === "/")
+            dispatch({ type: "SearchModeChanged", payload: "Repo" });
         }}
       >
         Search Repo
@@ -50,7 +55,8 @@ export default function Navbar({ setSearchQuery, searchMode, setSearchMode }) {
         style={searchMode === "User" ? activeBtnStyle : {}}
         className="navbar__btn"
         onClick={() => {
-          if (location.pathname === "/") setSearchMode("User");
+          if (location.pathname === "/")
+            dispatch({ type: "SearchModeChanged", payload: "User" });
         }}
       >
         Search User

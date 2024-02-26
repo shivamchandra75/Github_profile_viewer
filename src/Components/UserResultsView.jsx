@@ -1,14 +1,19 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { TOKEN } from "../config";
+import { useMyData } from "./StateProvider";
+import { Link } from "react-router-dom";
+import Spinner from "./Spinner";
 
-export default function UserResultsView({ data }) {
+export default function UserResultsView() {
+  const { searchResults, dispatch, status } = useMyData();
   const [userData, SetUserData] = useState([]);
 
   useEffect(() => {
     async function fetchUserData() {
       try {
+        dispatch({ type: "isLoading" });
         //When you use map with async functions, it returns an array of promises, and the state is being set to an array of promises rather than the resolved data.
-        const promises = data.map(async (user) => {
+        const promises = searchResults.map(async (user) => {
           const res = await fetch(user.url, {
             headers: {
               Authorization: `Bearer ${TOKEN}`,
@@ -25,35 +30,47 @@ export default function UserResultsView({ data }) {
         const resolvedData = await Promise.all(promises);
 
         SetUserData(resolvedData);
+        dispatch({ type: "finishedLoading" });
       } catch (err) {
         console.error(err.message);
       }
     }
 
     fetchUserData();
-  }, [data]);
+  }, [searchResults]);
 
   return (
-    <div className="user-container">
-      {userData.length > 0 ? (
-        userData.map((user) => {
-          console.log(user);
-          return (
-            <div className="result-card" key={user.id}>
-              <div className="result-card__img">
-                <img src={user.avatar_url} alt="user shivam" />
-              </div>
-              <p>{user.login}</p>
-
-              <span>
-                {user.followers} followers • {user.following} following
-              </span>
-            </div>
-          );
-        })
+    <>
+      {status === "loading" ? (
+        <Spinner />
       ) : (
-        <button style={{ margin: "1rem" }}>Loading...</button>
+        <div className="user-container main">
+          {userData.length > 0
+            ? userData.map((user) => {
+                console.log(user);
+                const serializedObject = encodeURIComponent(
+                  JSON.stringify(user)
+                );
+                return (
+                  <Link
+                    to={`/userProfile?username=${user.login}&data=${serializedObject}`}
+                    className="result-card"
+                    key={user.id}
+                  >
+                    <div className="result-card__img">
+                      <img src={user.avatar_url} alt="user shivam" />
+                    </div>
+                    <p>{user.login}</p>
+
+                    <span>
+                      {user.followers} followers • {user.following} following
+                    </span>
+                  </Link>
+                );
+              })
+            : null}
+        </div>
       )}
-    </div>
+    </>
   );
 }

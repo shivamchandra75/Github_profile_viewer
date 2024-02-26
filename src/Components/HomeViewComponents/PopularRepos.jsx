@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import StarIcon from "../../icons/StarIcon";
 import ForkIcon from "../../icons/forkIcon";
 import { TOKEN } from "../../config";
+import { formatCompactNumber } from "../StateProvider";
 
 export default function PopularRepos() {
   const [fetchedRepos, setFetchedRepos] = useState([]);
+
   useEffect(() => {
     async function fetchPopularRepos() {
       try {
@@ -14,7 +16,7 @@ export default function PopularRepos() {
             headers: {
               Authorization: `Bearer ${TOKEN}`,
             },
-          },
+          }
         );
         const data = await res.json();
 
@@ -45,10 +47,10 @@ function Repo({ repo }) {
       </div>
       <p className="repo-name">{repo.name}</p>
       <span>
-        <StarIcon /> {repo.stargazers_count}
+        <StarIcon /> {formatCompactNumber(repo.stargazers_count)}
       </span>
       <span>
-        <ForkIcon /> {repo.forks_count}
+        <ForkIcon /> {formatCompactNumber(repo.forks_count)}
       </span>
     </li>
   );
